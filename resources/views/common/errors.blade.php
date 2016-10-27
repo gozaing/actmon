@@ -3,7 +3,7 @@
 @if (count($errors) > 0)
     <!-- フォームのエラーリスト -->
     <div class="alert alert-danger">
-        <strong>おや？何かがおかしいようです！</strong>
+        <strong>内容に間違いがあります</strong>
 
         <br><br>
 

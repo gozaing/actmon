@@ -16,7 +16,7 @@
 
         <!-- タスク名 -->
             <div class="form-group">
-                <label for="post-name" class="col-sm-3 control-label">Title</label>
+                <label for="post-title" class="col-sm-3 control-label">Title</label>
 
                 <div class="col-sm-6">
                     <input type="text" name="title" id="post-title" class="form-control">
@@ -46,16 +46,17 @@
     @if (count($posts) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
-                Current Posts
+                現在のポスト
             </div>
 
             <div class="panel-body">
-                <table class="table table-striped task-table">
+                <table class="table table-striped post-table">
 
                     <!-- テーブルヘッダ -->
                     <thead>
                     <th>Title</th>
                     <th>Body</th>
+                    <th>&nbsp;</th>
                     <th>&nbsp;</th>
                     </thead>
 
@@ -63,13 +64,18 @@
                     <tbody>
                     @foreach ($posts as $post)
                         <tr>
-                            <!-- Title -->
+                            <!-- Post Title -->
                             <td class="table-text">
                                 <div>{{ $post->title }}</div>
                             </td>
-                            <!-- Body -->
+                            <!-- Post Body -->
                             <td class="table-text">
                                 <div>{{ $post->body }}</div>
+                            </td>
+
+                            <!-- 編集ボタン -->>
+                            <td>
+                                <a href="{{ url('edit/'.$post->id) }}" class="btn btn-primary btn-sm">編集</a>
                             </td>
 
                             <!-- 削除ボタン -->
@@ -78,7 +84,7 @@
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
 
-                                    <button type="submit" id="delete-task-{{ $post->id }}" class="btn btn-danger">
+                                    <button type="submit" id="delete-post-{{ $post->id }}" class="btn btn-danger">
                                         <i class="fa fa-btn fa-trash"></i>削除
                                     </button>
                                 </form>
