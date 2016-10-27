@@ -8,7 +8,7 @@ before_script:
 - php artisan key:generate
 script:
 - mkdir -p build/logs
-- vendor/bin/phpunit --coverage-clover build/logs/clover.xml --configuration tests/phpunit.xml
+- vendor/bin/phpunit
   tests
 after_success:
 - travis_retry php vendor/bin/coveralls -v
