@@ -1,16 +1,17 @@
-# .travis.yml
 language: php
-
 php:
-  - '5.6'
-
+- '5.6'
 before_script:
-  - composer install --dev --no-interaction
-  - php artisan key:generate
-
+- cp .env.travis .env
+- mysql -e 'create database actmon_test;'
+- composer install --dev --no-interaction
+- php artisan key:generate
 script:
-  - php artisan
-  - vendor/bin/phpunit
-
+- mkdir -p build/logs
+- vendor/bin/phpunit --coverage-clover build/logs/clover.xml --configuration tests/phpunit.xml
+  tests
 after_success:
-  - travis_retry php vendor/bin/coveralls -v
+- travis_retry php vendor/bin/coveralls -v
+notifications:
+  slack:
+    secure: u3Cu7IssmW1R3QDq373H+PzYWzEZY1OL/vq5lI+bFMG2fZToaOtSzzIHP9T4MFFDM99v8NSaWLh4QfuBI4WCkRq8g/QcDAI9g03Xgm9ylAPS6IUysVTKTBn0hoNSSSReXUaHP3bxx44iwhikOK9ExBiPaFJtYvihcQM7A1YihtTfyT31+G8aW2QgFWda4lGfIsQqbgTKT8AyCrgJ4+VqSHuav/sMD3tbwEDELyIVg6jOCraUSXdnuyYEF7df0FZLiUl60kegkrKi5fSCOyemqj6DMs2F4xHuZbOMNwpIlFtMruubm52gbMQu4R7J96oEuCoT+F7vBs8ZUECdAIuDXYLkCsrUNlDyRkyPkGmKacBg92UGDzyZwtFqPKNe8Xm6rFAJhT95qR+QsxyMziVqgI3RBPFAmR4IwII4OnKJkuZbkjPyP7N5tyr5U6zY+yGDGBuEv+lXcLOnC58+jQTe1q3HRYYXVjya826oKUTOqdSjGyvmlOqVTKTU5oxnM+nombBCCN0AQPMDUCMt8hECN6DEdT+QnlENU0sa5sZMCIrcASx19H2nVglrgJ11y3Nih10MeK9QCBfC96EpxY9TIcnJA5+N+OUnGFlVHRe0Y916yJjKK0+GdAhaKWKBKBc7XOXXseHTT+zPVJXvNavrOShcccgCUVTqchKmH/PFvEM=
