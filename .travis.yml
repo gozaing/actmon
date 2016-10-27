@@ -11,3 +11,6 @@ before_script:
 script:
   - php artisan
   - vendor/bin/phpunit
+
+after_success:
+  - travis_retry php vendor/bin/coveralls -v
