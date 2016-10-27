@@ -6,6 +6,8 @@ php:
 
 before_script:
   - composer install --dev --no-interaction
+  - php artisan key:generate
 
 script:
+  - php artisan
   - vendor/bin/phpunit
