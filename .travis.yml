@@ -8,12 +8,12 @@ before_script:
 - php artisan key:generate
 script:
 - mkdir -p build/logs
-- chmod -R 777 build/logs
+#- chmod -R 777 build/logs
 #- vendor/bin/phpunit tests
 - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-- cat build/logs/clover.xml
+#- cat build/logs/clover.xml
 after_success:
-- php vendor/bin/coveralls -v
+- travis_retry php vendor/bin/coveralls -v
 notifications:
   email: false
   slack:
