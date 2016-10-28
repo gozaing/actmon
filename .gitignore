@@ -4,3 +4,6 @@
 Homestead.yaml
 Homestead.json
 .env
+
+# for phpunit logs
+/build
