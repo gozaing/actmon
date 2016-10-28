@@ -8,6 +8,7 @@ before_script:
 - php artisan key:generate
 script:
 - mkdir -p build/logs
+- chmod -R 777 build/logs
 - vendor/bin/phpunit tests
 after_success:
 - travis_retry php vendor/bin/coveralls -v
