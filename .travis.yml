@@ -9,7 +9,8 @@ before_script:
 script:
 - mkdir -p build/logs
 - chmod -R 777 build/logs
-- vendor/bin/phpunit tests
+#- vendor/bin/phpunit tests
+- vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 after_success:
 - travis_retry php vendor/bin/coveralls -v
 notifications:
