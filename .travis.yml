@@ -11,8 +11,9 @@ script:
 - chmod -R 777 build/logs
 #- vendor/bin/phpunit tests
 - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+- cat build/logs/clover.xml
 after_success:
-- travis_retry php vendor/bin/coveralls -v
+- php vendor/bin/coveralls -v
 notifications:
   email: false
   slack:
