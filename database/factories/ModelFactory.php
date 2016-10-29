@@ -28,3 +28,11 @@ $factory->defineAs(\App\User::class, 'guest', function($faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Post::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->title,
+//        'body' => $faker->body, // InvalidArgumentException: Unknown formatter "body"
+        'body' => 'bbb',
+    ];
+});
