@@ -6,6 +6,7 @@ before_script:
 - mysql -e 'create database actmon_test;'
 - composer install --dev --no-interaction
 - php artisan key:generate
+- php artisan migrate
 script:
 - mkdir -p build/logs
 - vendor/bin/phpunit tests
