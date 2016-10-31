@@ -79,9 +79,9 @@ return [
         ],
 
         'testing' => [
-            'driver'    => 'mysql',
+            'driver'    => 'sqlite',
             'host'      => env('DB_TEST_HOST', 'localhost'),
-            'database'  => env('DB_TEST_DATABASE', 'actmon_test'),
+            'database'  => env('DB_TEST_DATABASE', ':memory:'),
             'username'  => env('DB_TEST_USERNAME', 'root'),
             'password'  => env('DB_TEST_PASSWORD', ''),
             'charset'   => 'utf8',
