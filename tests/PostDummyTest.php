@@ -21,7 +21,7 @@ class PostDummyTest extends \TestCase
                 ]));
             });
 
-        $this->assertEquals(2, \App\Post::all()->count());
+        $this->assertEquals(1, \App\Post::all()->count());
 
     }
 
