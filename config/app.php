@@ -157,10 +157,9 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /**
-         * help tool
+         * help tool when env is local
          */
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+        App\Providers\DevelopServiceProvider::class
 
     ],
 
