@@ -3,8 +3,11 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateCommentsTable extends Migration
 {
+//    use DownForeignKeyCheckTrait;
+
+    protected $table = 'comments';
     /**
      * Run the migrations.
      *
@@ -12,13 +15,12 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('name', 85);
-            $table->string('email', 85)->unique();
-            $table->string('password', 60);
-            $table->rememberToken();
+            $table->integer('entry_id', false, true);
+            $table->string('name', 85)->nullable();
+            $table->text('comment');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::drop('comments');
     }
 }
