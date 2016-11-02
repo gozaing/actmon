@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\User;
+use App\DataAccess\Eloquent\User;
 use App\Post;
 
 class PostPolicy

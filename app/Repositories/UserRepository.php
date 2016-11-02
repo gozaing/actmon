@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\User;
+use App\DataAccess\Eloquent\User;
 
 class UserRepository implements UserRepositoryInterface
 {

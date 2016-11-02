@@ -10,20 +10,28 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+//
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+//
+//Route::auth();
+//
+//Route::get('/home', 'HomeController@index');
+//
+//
+//Route::get('/posts', 'PostController@index');
+//Route::post('/post', 'PostController@store');
+//Route::get('/confirm', 'PostController@confirm');
+//Route::post('/complete', 'PostController@complete');
+//Route::get('/edit/{id}', 'PostController@edit');
+//Route::post('/update/{id}', 'PostController@update');
+//Route::delete('/post/{post}', 'PostController@destroy');
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::auth();
-
-Route::get('/home', 'HomeController@index');
-
-
-Route::get('/posts', 'PostController@index');
-Route::post('/post', 'PostController@store');
-Route::get('/confirm', 'PostController@confirm');
-Route::post('/complete', 'PostController@complete');
-Route::get('/edit/{id}', 'PostController@edit');
-Route::post('/update/{id}', 'PostController@update');
-Route::delete('/post/{post}', 'PostController@destroy');
+\Route::controller('auth', 'Auth\AuthController',
+    [
+        'postLogin' => 'post.login',
+        'getLogin' => 'get.login',
+        'getRegister' => 'get.register',
+        'postRegister' => 'post.register',
+    ]);

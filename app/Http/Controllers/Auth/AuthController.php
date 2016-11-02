@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+//use App\User;
+use App\DataAccess\Eloquent\User;
+//use App\Http\Requests\Request;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -28,7 +31,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/posts';
+    protected $redirectTo = '/';
 
     /**
      * Create a new authentication controller instance.
@@ -68,5 +71,32 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function postRegister(Request $request)
+    {
+        $validator = $this->validator($request->all());
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        $user = $this->create($request->all());
+
+        // Mail send
+        \Mail::send(
+            'emails.register',
+            ['user' => $user],
+            function ($m) use ($user) {
+                $m->sender('laravel-from@example.com', 'laravel ref')
+                    ->to($user->email, $user->name)
+                    ->subject('ユーザ登録完了');
+            }
+        );
+
+        \Auth::login($user);
+
+        return redirect($this->redirectPath());
     }
 }

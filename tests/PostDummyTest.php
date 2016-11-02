@@ -12,7 +12,7 @@ class PostDummyTest extends \TestCase
 
     public function testRelationRecord()
     {
-        factory(App\User::class)
+        factory(App\DataAccess\Eloquent\User::class)
             ->create()
             ->each(function($u) {
                 $u->posts()->save(factory(\App\Post::class)->create([

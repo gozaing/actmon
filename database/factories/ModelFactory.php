@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\DataAccess\Eloquent\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->safeEmail,
@@ -20,7 +20,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->defineAs(\App\User::class, 'guest', function($faker) {
+$factory->defineAs(\App\DataAccess\Eloquent\User::class, 'guest', function($faker) {
     return [
         'name' => 'guest',
         'email' => null,

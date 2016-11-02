@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\User;
+use App\DataAccess\Eloquent\User;
 use Illuminate\Database\Eloquent\Collection;
 
 class PostRepository
