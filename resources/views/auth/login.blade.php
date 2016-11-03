@@ -1,66 +1,27 @@
-@extends('layouts.app')
-
+@extends('layouts.default')
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i> Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    @if(session('message'))
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{{ session('message') }}}
         </div>
-    </div>
-</div>
-@endsection
+    @endif
+    <form class="form-signin" method="post" action="{{{ route('post.login') }}}">
+        <h2 class="form-signin-heading">ログイン</h2>
+        {!! csrf_field() !!}
+        <label for="inputEmail" class="sr-only">メールアドレス {{{ $errors->first('email') }}}</label>
+        <input type="email" id="inputEmail" class="form-control" name="email" placeholder="メールアドレスを入力してください"
+               value="{{{ old('email') }}}" required autofocus>
+        <label for="inputPassword" class="sr-only">パスワード {{{ $errors->first('password') }}}</label>
+        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="パスワードを入力してください"
+               required>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="remember" value="1">ログイン状態を保存
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
+        <a href="{{{ route('get.register') }}}">アカウント作成はこちら</a>
+    </form>
+@stop

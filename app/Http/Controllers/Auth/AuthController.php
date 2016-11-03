@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\LoginRequest;
 use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRegisterRequest;
@@ -44,5 +45,30 @@ class AuthController extends Controller
         $this->auth->login($result);
 
         return redirect()->route('admin.entry.index');
+    }
+
+    public function postLogin(LoginRequest $request)
+    {
+//        $result = $this->auth->attempt(
+//            $request->only(['email', 'password']),
+//            $request->get('remember', false)
+//        );
+//        if (!$result) {
+//            return redirect()->route('get.login')
+//                ->with('message', 'ユーザ認証に失敗しました');
+//        }
+//
+//        return redirect()->route('admin.entry.index');
+
+        $result = $this->auth->attempt(
+            $request->only(['email', 'password']),
+            $request->get('remember', false)
+        );
+        if (!$result) {
+            return redirect()->route('get.login')
+                ->with('message', 'ユーザー認証に失敗しました'); // このメッセージはtransヘルパー関数を利用しても表示できます
+        }
+        return redirect()->route('admin.entry.index');
+
     }
 }
