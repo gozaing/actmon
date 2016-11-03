@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-//use App\User;
-use App\DataAccess\Eloquent\User;
-//use App\Http\Requests\Request;
-use Validator;
+use App\Services\UserService;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
+use App\Http\Requests\UserRegisterRequest;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Http\Request;
+
 
 class AuthController extends Controller
 {
@@ -24,79 +22,27 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use AuthenticatesAndRegistersUsers;
 
     /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
+     * @var Guard
      */
-    protected $redirectTo = '/';
+    protected $auth;
 
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+
+    public function __construct(Guard $auth)
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        // getLogout メッソド以外は未ログインの場合にのみアクセス出来ます
+        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->auth = $auth;
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function postRegister(UserRegisterRequest $request, UserService $user)
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-    }
+        $input = $request->only(['name', 'email', 'password']);
+        $result = $user->registerUser($input);
+        $this->auth->login($result);
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
-
-    public function postRegister(Request $request)
-    {
-        $validator = $this->validator($request->all());
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
-
-        $user = $this->create($request->all());
-
-        // Mail send
-        \Mail::send(
-            'emails.register',
-            ['user' => $user],
-            function ($m) use ($user) {
-                $m->sender('laravel-from@example.com', 'laravel ref')
-                    ->to($user->email, $user->name)
-                    ->subject('ユーザ登録完了');
-            }
-        );
-
-        \Auth::login($user);
-
-        return redirect($this->redirectPath());
+        return redirect()->route('admin.entry.index');
     }
 }
