@@ -158,6 +158,8 @@ return [
 
         // 画像キャプチャによるバリデーションを追加しています
         App\Providers\CaptchaServiceProvider::class,
+        // 認証ドライバの追加
+        App\Providers\DriverServiceProvider::class,
 
         /**
          * help tool when env is local

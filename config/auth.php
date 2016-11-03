@@ -63,6 +63,7 @@ return [
     | Supported: "database", "eloquent"
     |
     */
+    'driver' => 'auth_cache',
 
     'providers' => [
         'users' => [
