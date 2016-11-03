@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Http\Validators\CustomValidator;
 use Illuminate\Support\ServiceProvider;
+use App\DataAccess\Cache\DataCache;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,15 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Repositories\UserRepositoryInterface::class,
             \App\Repositories\UserRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\EntryRepositoryInterface::class,
+            function ($app) {
+                return new \App\Repositories\EntryRepository(
+                    new \App\DataAccess\Eloquent\Entry,
+                    new DataCache($app['cache'], 'entry', 120)
+                );
+            }
         );
     }
 }
