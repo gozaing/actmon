@@ -46,7 +46,7 @@ class CaptchaServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            '\Gregwar\Captcha\CaptchaBuilderInterface',
+            'Gregwar\Captcha\CaptchaBuilderInterface',
         ];
     }
 }
