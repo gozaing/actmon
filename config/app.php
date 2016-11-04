@@ -160,6 +160,8 @@ return [
         App\Providers\CaptchaServiceProvider::class,
         // 認証ドライバの追加
         App\Providers\DriverServiceProvider::class,
+        // ログイン者名表示用のcompose
+        App\Providers\ViewServiceProvider::class,
 
         /**
          * help tool when env is local
